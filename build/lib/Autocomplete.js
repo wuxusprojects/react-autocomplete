@@ -177,13 +177,14 @@ var Autocomplete = React.createClass({
         event.preventDefault();
         var item = this.getFilteredItems()[this.state.highlightedIndex];
         var value = this.props.getItemValue(item);
+        var index = this.state.highlightedIndex;
         this.setState({
           isOpen: false,
           highlightedIndex: null
         }, function () {
           //this.refs.input.focus() // TODO: file issue
           _this2.refs.input.setSelectionRange(value.length, value.length);
-          _this2.props.onSelect(value, item);
+          _this2.props.onSelect(value, item, index);
         });
       }
     },
@@ -259,11 +260,12 @@ var Autocomplete = React.createClass({
     var _this5 = this;
 
     var value = this.props.getItemValue(item);
+    var index = this.state.highlightedIndex;
     this.setState({
       isOpen: false,
       highlightedIndex: null
     }, function () {
-      _this5.props.onSelect(value, item);
+      _this5.props.onSelect(value, item, index);
       _this5.refs.input.focus();
       _this5.setIgnoreBlur(false);
     });
@@ -338,6 +340,7 @@ var Autocomplete = React.createClass({
       _extends({ style: _extends({}, this.props.wrapperStyle) }, this.props.wrapperProps),
       React.createElement('input', _extends({}, this.props.inputProps, {
         role: 'combobox',
+        placeholder: this.props.placeHolder,
         'aria-autocomplete': 'both',
         autoComplete: 'off',
         ref: 'input',
